@@ -10,16 +10,14 @@ fn main() {
 					events: vec![
 						Event {
 							command_type: CommandType::Look,
-							event_type: EventType::Print {
-								text: "It's a gun, \
+							event_type: EventType::Print(
+								"It's a gun, \
 								what more could a gal ask for?".to_string()
-							}
+							)
 						},
 						Event {
 							command_type: CommandType::Custom(vec!["yes".to_string(), "no".to_string()]),
-							event_type: EventType::Print {
-								text: "Maybe gun.".to_string()
-							}
+							event_type: EventType::Print("Maybe gun.".to_string())
 						}
 					]
 				}
@@ -27,10 +25,12 @@ fn main() {
 			events: vec![
 				Event {
 					command_type: CommandType::Look,
-					event_type: EventType::Print {
-						text: "It's a room, \
-						what more could a gal ask for?".to_string()
-					}
+					event_type: EventType::Multi(
+						vec![
+							EventType::Print("Ok!".to_string()),
+							EventType::Print("No!".to_string())
+						]
+					)
 				}
 			]
 		}

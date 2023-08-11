@@ -32,12 +32,27 @@ impl Command {
 			_ => { game.rooms[game.position].event(self); }
 		}
 	}
+
+	pub fn command_strings(&self) -> Vec<String> {
+		self.command_type.command_strings()
+	}
 }
 
 #[derive(PartialEq)]
 pub enum CommandType {
 	Look,
 	Custom(Vec<String>)
+}
+
+impl CommandType {
+	pub fn command_strings(&self) -> Vec<String> {
+		match &self {
+			CommandType::Look => vec![
+				"look".to_string(),
+			],
+			CommandType::Custom(commands) => commands.to_vec()
+		}
+	}
 }
 
 pub struct Event {
@@ -56,15 +71,22 @@ impl Event {
 	}
 
 	pub fn exec(&self) {
-		match &self.event_type {
-			EventType::Print { text } => { println!("{}", text); }
-			_ => ()
-		}
+		let _ = &self.event_type.exec();
 	}
 }
 
 pub enum EventType {
-	Print { text: String },
-	Multi { events: Vec<EventType> },
+	Print(String),
+	Multi(Vec<EventType>),
 	Custom { commands: Vec<String> }
+}
+
+impl EventType {
+	pub fn exec(&self) {
+		match &self {
+			EventType::Print(text) => { println!("{}", text); },
+			EventType::Multi(events) => { for i in events { i.exec(); } },
+			_ => ()
+		}
+	}
 }
