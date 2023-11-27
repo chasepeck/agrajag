@@ -28,8 +28,10 @@ impl Room {
 				if i.match_command(command) { i.exec(); return; }
 			}
 		} else {
-			for i in &self.events {
-				if i.match_command(command) { i.exec(); return; }
+			if &command.param.len() == &0 {
+				for i in &self.events {
+					if i.match_command(command) { i.exec(); return; }
+				}
 			}
 		}
 

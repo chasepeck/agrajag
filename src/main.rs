@@ -25,12 +25,7 @@ fn main() {
 			events: vec![
 				Event {
 					command_type: CommandType::Look,
-					event_type: EventType::Multi(
-						vec![
-							EventType::Print("Ok!".to_string()),
-							EventType::Print("No!".to_string())
-						]
-					)
+					event_type: EventType::Print("It's a room. There's a gun.".to_string())
 				}
 			]
 		}
